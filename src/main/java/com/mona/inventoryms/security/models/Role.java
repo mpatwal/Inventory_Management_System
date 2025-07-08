@@ -1,6 +1,5 @@
 package com.mona.inventoryms.security.models;
 
-import com.mona.inventoryms.security.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

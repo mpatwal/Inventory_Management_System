@@ -1,11 +1,10 @@
 package com.mona.inventoryms.models;
 
 
-import com.mona.inventoryms.security.Auditable;
+import com.mona.inventoryms.security.models.Auditable;
 import lombok.Data;
 
 import jakarta.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "transaction")

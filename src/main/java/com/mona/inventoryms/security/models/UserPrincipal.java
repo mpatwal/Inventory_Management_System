@@ -1,4 +1,4 @@
-package com.mona.inventoryms.security;
+package com.mona.inventoryms.security.models;
 
 import com.mona.inventoryms.models.User;
 import org.springframework.security.core.GrantedAuthority;

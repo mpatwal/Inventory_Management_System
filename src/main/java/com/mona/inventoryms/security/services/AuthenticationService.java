@@ -1,4 +1,4 @@
-package com.mona.inventoryms.security;
+package com.mona.inventoryms.security.services;
 
 import com.mona.inventoryms.models.User;
 import com.mona.inventoryms.repository.UserRepository;

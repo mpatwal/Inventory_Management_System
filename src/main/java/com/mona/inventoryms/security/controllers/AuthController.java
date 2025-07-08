@@ -1,6 +1,7 @@
-package com.mona.inventoryms.security;
+package com.mona.inventoryms.security.controllers;
 
-import com.mona.inventoryms.models.User;
+import com.mona.inventoryms.security.services.AuthenticationService;
+import com.mona.inventoryms.security.models.LoginRequest;
 import com.mona.inventoryms.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ public class AuthController {
 
     private final UserService userService;
 
-    private final com.mona.inventoryms.security.AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
 
     public AuthController(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
@@ -22,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody com.mona.inventoryms.security.LoginRequest loginRequest, HttpSession session) {
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         try {
             boolean isAuthenticated = authenticationService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
             if (isAuthenticated) {

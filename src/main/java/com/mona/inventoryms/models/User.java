@@ -2,7 +2,7 @@ package com.mona.inventoryms.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import com.mona.inventoryms.security.Auditable;
+import com.mona.inventoryms.security.models.Auditable;
 import com.mona.inventoryms.security.models.UserPrivilegeAssignment;
 import jakarta.persistence.*;
 import lombok.Data;

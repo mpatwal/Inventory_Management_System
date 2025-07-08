@@ -1,4 +1,4 @@
-package com.mona.inventoryms.security;
+package com.mona.inventoryms.security.repository;
 
 import com.mona.inventoryms.security.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

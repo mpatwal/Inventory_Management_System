@@ -1,7 +1,7 @@
 package com.mona.inventoryms.models;
 
 
-import com.mona.inventoryms.security.Auditable;
+import com.mona.inventoryms.security.models.Auditable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

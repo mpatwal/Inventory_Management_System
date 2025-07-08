@@ -1,7 +1,8 @@
-package com.mona.inventoryms.security;
+package com.mona.inventoryms.security.services;
 
 import com.mona.inventoryms.repository.UserRepository;
 import com.mona.inventoryms.security.models.Role;
+import com.mona.inventoryms.security.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

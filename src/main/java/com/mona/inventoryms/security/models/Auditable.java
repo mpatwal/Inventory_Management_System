@@ -1,4 +1,4 @@
-package com.mona.inventoryms.security;
+package com.mona.inventoryms.security.models;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

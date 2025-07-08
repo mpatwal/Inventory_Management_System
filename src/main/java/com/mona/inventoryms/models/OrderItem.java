@@ -3,13 +3,9 @@ package com.mona.inventoryms.models;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import com.mona.inventoryms.security.Auditable;
+import com.mona.inventoryms.security.models.Auditable;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import java.util.Date;
 
 @Entity
 @Table(name = "order_item")

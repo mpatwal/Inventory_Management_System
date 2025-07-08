@@ -1,7 +1,8 @@
-package com.mona.inventoryms.security;
+package com.mona.inventoryms.security.services;
 
 import com.mona.inventoryms.models.User;
 import com.mona.inventoryms.repository.UserRepository;
+import com.mona.inventoryms.security.models.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,6 +26,6 @@ public class MyUserDetailsService implements UserDetailsService {
         if(user == null) {
             throw  new UsernameNotFoundException("User not found in the database");
         }
-        return new com.mona.inventoryms.security.UserPrincipal(user);
+        return new UserPrincipal(user);
     }
 }

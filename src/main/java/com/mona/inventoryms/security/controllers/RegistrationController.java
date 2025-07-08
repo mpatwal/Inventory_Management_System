@@ -1,6 +1,7 @@
-package com.mona.inventoryms.security;
+package com.mona.inventoryms.security.controllers;
 
 import com.mona.inventoryms.models.User;
+import com.mona.inventoryms.security.services.AuthenticationService;
 import com.mona.inventoryms.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
