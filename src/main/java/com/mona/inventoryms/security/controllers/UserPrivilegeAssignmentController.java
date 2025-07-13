@@ -12,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RestController
+@Transactional
 public class UserPrivilegeAssignmentController {
+
     @Autowired
     private UserPrivilegeAssignmentService userPrivilegeAssignmentService;
 
@@ -56,7 +58,7 @@ public class UserPrivilegeAssignmentController {
     }
 
     @GetMapping("/privilege/{privilegeid}/users")
-    public List<User> getUsersByPrivilege(@PathVariable("privilegeid") Long privilegeid) {
+    public  List<User> getUsersByPrivilege(@PathVariable("privilegeid") Long privilegeid) {
         return userPrivilegeAssignmentService.getUsersByPrivilege(privilegeid);
     }
 

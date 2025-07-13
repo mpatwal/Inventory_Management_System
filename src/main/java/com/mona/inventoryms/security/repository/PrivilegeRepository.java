@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PrivilegeRepository extends JpaRepository<Privilege,Long> {
-    public List<Privilege>findByRoleid(Long roleid);
-
+public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
+    public List<Privilege> findByRoleid(Long roleid);
 }

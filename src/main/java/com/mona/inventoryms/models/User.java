@@ -1,7 +1,10 @@
 package com.mona.inventoryms.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.mona.inventoryms.security.models.SecureToken;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mona.inventoryms.security.models.Auditable;
 import com.mona.inventoryms.security.models.UserPrivilegeAssignment;
 import jakarta.persistence.*;
@@ -10,12 +13,13 @@ import lombok.Data;
 import java.util.*;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
+@Table(name = "user", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email"),
         @UniqueConstraint(columnNames = "mobile"),
         @UniqueConstraint(columnNames = "username")
 })
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User extends Auditable<String> {
 
     @Id
@@ -43,6 +47,12 @@ public class User extends Auditable<String> {
     private String imageUrl;
     private String occupation;
 
+    @OneToMany(mappedBy = "user")
+    private List<SecureToken> tokens;
+
+    private boolean accountVerified;
+    private boolean loginDisabled;
+
     @ManyToOne
     @JoinColumn(name = "locationid", insertable = false, updatable = false)
     private Location location;
@@ -66,10 +76,8 @@ public class User extends Auditable<String> {
     @Column(columnDefinition = "TEXT")
     private String profile;
 
-
     @OneToMany(mappedBy = "user")
     private List<UserPrivilegeAssignment> privileges;
-
 
     @ElementCollection
     @CollectionTable(name = "social_links", joinColumns = @JoinColumn(name = "user_id"))
@@ -100,4 +108,15 @@ public class User extends Auditable<String> {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<Message> messages;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + firstName + '\'' +
+                ", lastName'" + lastName + '\'' +
+                // Do not include privileges here to prevent recursion
+                '}';
+    }
+
 }

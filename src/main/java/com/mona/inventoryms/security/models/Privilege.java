@@ -1,5 +1,6 @@
 package com.mona.inventoryms.security.models;
 
+import com.fasterxml.jackson.annotation.*;
 import com.mona.inventoryms.models.User;
 
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Privilege extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,15 +18,12 @@ public class Privilege extends Auditable<String> {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name="userid",insertable = false,updatable = false)
-    private User user;
-    private  Long userid;
-
-    @ManyToOne
-    @JoinColumn(name="roleid",insertable = false,updatable = false)
+    @JoinColumn(name = "roleid", insertable = false, updatable = false)
+    @JsonBackReference
     private Role role;
-    private  Long roleid;
+    private Long roleid;
 
     @OneToMany(mappedBy = "privilege")
+    @JsonIgnore
     private List<UserPrivilegeAssignment> users;
 }

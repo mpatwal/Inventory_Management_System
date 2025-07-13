@@ -8,8 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class PrivilegeService {
+
     @Autowired
-private PrivilegeRepository privilegeRepository;
+    private PrivilegeRepository privilegeRepository;
 
     public List<Privilege> findAll(){
         return privilegeRepository.findAll();
@@ -34,4 +35,5 @@ private PrivilegeRepository privilegeRepository;
     public void update(Privilege privilege) {
         privilegeRepository.save(privilege);
     }
+
 }
