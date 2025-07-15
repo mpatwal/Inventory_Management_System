@@ -17,6 +17,9 @@ public class RegisterRequest {
     private String email;
 
     @NotBlank(message = "field can't be empty")
+    private String phoneNumber;
+
+    @NotBlank(message = "field can't be empty")
     private String password;
 
     private UserRole role;

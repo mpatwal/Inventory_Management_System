@@ -38,7 +38,7 @@ public class SecurityConfig {
                         .accessDeniedHandler(customAccessDenialHandler)
                         .authenticationEntryPoint(customAuthenticationEntryPoint))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/autj/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager ->
