@@ -1,6 +1,7 @@
 package com.manisha.IMSystem.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.manisha.IMSystem.enums.TransactionStatus;
 import com.manisha.IMSystem.enums.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -25,6 +26,7 @@ public class TransactionRequest {
 
     private String description;
     private String note;
+
 
 
 }

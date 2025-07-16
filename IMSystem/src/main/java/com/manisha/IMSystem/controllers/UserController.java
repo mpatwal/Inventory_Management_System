@@ -4,6 +4,7 @@ import com.manisha.IMSystem.dto.LoginRequest;
 import com.manisha.IMSystem.dto.RegisterRequest;
 import com.manisha.IMSystem.dto.Response;
 import com.manisha.IMSystem.dto.UserDTO;
+import com.manisha.IMSystem.models.User;
 import com.manisha.IMSystem.services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,10 @@ public class UserController {
     @GetMapping("/transaction/{userId}")
     public ResponseEntity<Response>getUserAndTransactions(@PathVariable Long userId){
         return ResponseEntity.ok(userService.getUSerTransactions(userId));
+    }
+
+    @GetMapping("/current")
+    public ResponseEntity<User>getCurrentUSer(){
+        return ResponseEntity.ok(userService.getCurrentLoggedInUser());
     }
 }
