@@ -1,9 +1,7 @@
 package com.manisha.IMSystem.controllers;
 
 import com.manisha.IMSystem.dto.CategoryDTO;
-import com.manisha.IMSystem.dto.RegisterRequest;
 import com.manisha.IMSystem.dto.Response;
-import com.manisha.IMSystem.dto.UserDTO;
 import com.manisha.IMSystem.services.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
