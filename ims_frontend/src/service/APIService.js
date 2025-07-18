@@ -12,9 +12,9 @@ export default class ApiService {
       this.ENCRYPTION_KEY.toString()
     ).toString();
   }
-  // decrpypt data
-  static encrypt(data) {
-    const bytes = CryptoJS.decrypt(data, this.ENCRYPTION_KEY);
+  //decrypt data
+  static decrypt(data) {
+    const bytes = CryptoJS.AES.decrypt(data, this.ENCRYPTION_KEY);
     return bytes.toString(CryptoJS.enc.Utf8);
   }
 
@@ -309,7 +309,6 @@ export default class ApiService {
   static async getAllTransactions() {
     const response = await axios.get(`${this.BASE_URL}/transaction/all`, {
       headers: this.getHeader(),
-      params: { filter },
     });
     return response.data;
   }
@@ -346,7 +345,7 @@ export default class ApiService {
   /**AUTHENTICATION CHECKER    */
 
   static logout() {
-    this.cleanAuth;
+    this.cleanAuth();
   }
   static isAuthenticated() {
     const token = this.getToken();
