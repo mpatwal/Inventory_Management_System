@@ -1,7 +1,6 @@
-import React, { use } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../component/Layout";
 import APIService from "../service/APIService";
-import { useNavigate, useParams } from "react-router-dom";
 
 const Profile = () => {
   const [user, setUser] = useState(null);

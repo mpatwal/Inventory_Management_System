@@ -40,7 +40,7 @@ const Sidebar = () => {
 
         {isAdmin && (
           <li>
-            <Link to="/suppliers">Supplier</Link>
+            <Link to="/supplier">Supplier</Link>
           </li>
         )}
 

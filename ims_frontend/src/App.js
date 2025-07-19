@@ -5,6 +5,7 @@ import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
 import Category from "./pages/Category";
 import Profile from "./pages/Profile";
+import Supplier from "./pages/Supplier";
 
 function App() {
   return (
@@ -12,14 +13,20 @@ function App() {
       <Routes>
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<ProtectedRoute />} />
 
         {/*Admin Routes*/}
         <Route
           path="/category"
           element={<AdminRoute element={<Category />} />}
         />
-        <Route path="/profile" element={<AdminRoute element={<Profile />} />} />
+        <Route
+          path="/profile"
+          element={<ProtectedRoute element={<Profile />} />}
+        />
+        <Route
+          path="/supplier"
+          element={<AdminRoute element={<Supplier />} />}
+        />
       </Routes>
     </Router>
   );

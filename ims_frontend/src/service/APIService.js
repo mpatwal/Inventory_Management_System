@@ -116,6 +116,7 @@ export default class ApiService {
   }
 
   /**PRODUCT ENDPOINTS */
+
   static async getAllProducts() {
     const response = await axios.get(`${this.BASE_URL}/products/all`, {
       headers: this.getHeader(),
@@ -142,13 +143,6 @@ export default class ApiService {
         headers: { ...this.getHeader(), "Content-Type": "multipart/form-data" },
       }
     );
-    return response.data;
-  }
-
-  static async getAllProducts() {
-    const response = await axios.get(`${this.BASE_URL}/products/all`, {
-      headers: this.getHeader(),
-    });
     return response.data;
   }
 
