@@ -54,7 +54,6 @@ const Supplier = () => {
 
   return (
     <Layout>
-      <h1>Supplier List</h1>
       {message && <div className="message">{message}</div>}
       <div className="supplier-page">
         <div className="supplier-header">
