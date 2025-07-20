@@ -32,6 +32,8 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
 
     private static  final String IMAGE_DIRECTORY = System.getProperty("user.dir") + "/product-images/";
+    //for frontend
+    private static  final String IMAGE_DIRECTORY_2 = "C:/Users/Monalisha/OneDrive/Desktop/Inventory_Management_System/inventoryms/ims_frontend/public/products";
 
     @Override
     public Response saveProduct(ProductDTO productDTO, MultipartFile imageFile) {
@@ -52,7 +54,8 @@ public class ProductServiceImpl implements ProductService {
                 .build();
         if(imageFile !=null && !imageFile.isEmpty()){
             log.info("Image file exists");
-            String imagePath = saveImage(imageFile);
+        //    String imagePath = saveImage(imageFile);//when frontend is not set uped
+            String imagePath = saveImage2(imageFile); //when frontend i sset uped
             productToSave.setImageUrl(imagePath);
         }
 
@@ -75,7 +78,8 @@ public class ProductServiceImpl implements ProductService {
 
         //check if image is associated with the product to update and upload
         if(imageFile != null && !imageFile.isEmpty()){
-            String imagePath = saveImage(imageFile);
+            //    String imagePath = saveImage(imageFile);//when frontend is not set uped
+            String imagePath = saveImage2(imageFile); //when frontend i sset uped
             existingProduct.setImageUrl(imagePath);
         }
 
@@ -210,4 +214,29 @@ public class ProductServiceImpl implements ProductService {
         }
         return imagePath;
     }
+
+    private String saveImage2(MultipartFile imageFile){
+
+        if (!imageFile.getContentType().startsWith("image/") || imageFile.getSize() > 1024 * 1024 * 1024) {
+            throw new IllegalArgumentException("Only files under 1GIG are allowed");
+        }
+
+        File directory = new File(IMAGE_DIRECTORY_2);
+        if (!directory.exists()) {
+            directory.mkdirs(); // Create nested directories if not exists
+            log.info("Directory was created");
+        }
+
+        String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+        String imagePath = IMAGE_DIRECTORY_2 + File.separator + uniqueFileName;
+
+        try {
+            File destinationFile = new File(imagePath);
+            imageFile.transferTo(destinationFile);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error saving Image: " + e.getMessage());
+        }
+        return "products/"+uniqueFileName;
+    }
+
 }
