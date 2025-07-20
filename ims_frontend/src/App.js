@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import Supplier from "./pages/Supplier";
 import AddEditSupplier from "./pages/AddEditSupplier";
 import Product from "./pages/Product";
+import AddEditproduct from "./pages/AddEditProduct";
 
 function App() {
   return (
@@ -38,6 +39,14 @@ function App() {
           element={<AdminRoute element={<AddEditSupplier />} />}
         />
         <Route path="/product" element={<AdminRoute element={<Product />} />} />
+        <Route
+          path="/add-product"
+          element={<AdminRoute element={<AddEditproduct />} />}
+        />
+        <Route
+          path="/edit-product/:productId"
+          element={<AdminRoute element={<AddEditproduct />} />}
+        />
       </Routes>
     </Router>
   );
