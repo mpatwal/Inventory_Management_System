@@ -14,7 +14,7 @@ const Product = () => {
   //Pagination set-up
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const itemsPerPage = 6;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const getProducts = async () => {

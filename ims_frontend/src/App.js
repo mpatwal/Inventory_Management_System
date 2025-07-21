@@ -9,6 +9,10 @@ import Supplier from "./pages/Supplier";
 import AddEditSupplier from "./pages/AddEditSupplier";
 import Product from "./pages/Product";
 import AddEditproduct from "./pages/AddEditProduct";
+import Purchase from "./pages/Purchase";
+import Sell from "./pages/Sell";
+import Transaction from "./pages/Transaction";
+import TransactionDetails from "./pages/TransactionDetails";
 
 function App() {
   return (
@@ -47,6 +51,21 @@ function App() {
           path="/edit-product/:productId"
           element={<AdminRoute element={<AddEditproduct />} />}
         />
+
+        {/* ADMIN AND MANGER ROUTE*/}
+        <Route
+          path="/purchase"
+          element={<ProtectedRoute element={<Purchase />} />}
+        />
+        <Route
+          path="/transactions"
+          element={<ProtectedRoute element={<Transaction />} />}
+        />
+        <Route
+          path="/transactions/:transactionId"
+          element={<ProtectedRoute element={<TransactionDetails />} />}
+        />
+        <Route path="/sell" element={<ProtectedRoute element={<Sell />} />} />
       </Routes>
     </Router>
   );
