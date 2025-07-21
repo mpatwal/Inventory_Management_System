@@ -22,7 +22,7 @@ const LoginPage = () => {
         navigate("/dashboard");
       }
     } catch (error) {
-      setMessage(
+      showMessage(
         error.response?.data?.message ||
           "Login failed. Please try again." + error
       );
@@ -38,6 +38,10 @@ const LoginPage = () => {
   };
   return (
     <div className="auth-container">
+      <video autoPlay loop muted className="background-video">
+        <source src="/video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
       <div className="auth-card">
         <div className="auth-header">
           <h2 className="auth-title">Login</h2>

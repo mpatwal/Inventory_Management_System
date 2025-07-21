@@ -79,21 +79,25 @@ const TransactionDetails = () => {
               )}
             </div>
 
-            {/*Product information of the transaction*/}
-            <div className="section-card">
-              <h2>Product Information</h2>
-              <p>Name : {transaction.product.name}</p>
-              <p>SKU : {transaction.product.sku}</p>
-              <p>Price : {transaction.product.price.toFixed(2)}</p>
-              <p>Stock Quantity : {transaction.product.stockQuantity}</p>
-              <p>Description : {transaction.product.description}</p>
-              {transaction.product.imageUrl && (
-                <img
-                  src={transaction.product.imageUrl}
-                  alt={transaction.product.name}
-                />
-              )}
-            </div>
+            {transaction?.product && (
+              <div className="section-card">
+                <h2>Product Information</h2>
+                <p>Name : {transaction.product.name}</p>
+                <p>SKU : {transaction.product.sku}</p>
+                <p>Stock Quantity : {transaction.product.stockQuantity}</p>
+                <p>Description : {transaction.product.description}</p>
+
+                {transaction.product.imageUrl && (
+                  <img
+                    className="product-image"
+                    src={`/${transaction.product.imageUrl}`}
+                    alt={transaction.product.name}
+                  />
+                )}
+
+                <p>Price : {transaction.product.price.toFixed(2)}</p>
+              </div>
+            )}
 
             {/*User information of the transaction*/}
             <div className="section-card">

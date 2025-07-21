@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import Layout from "../component/Layout";
 import APIService from "../service/APIService";
 import {
@@ -10,27 +12,18 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  ComposedChart,
 } from "recharts";
-import { PieChart, Pie, Cell, BarChart, Bar } from "recharts";
-
-const COLORS = [
-  "#8884d8",
-  "#82ca9d",
-  "#ffc658",
-  "#ff8042",
-  "#8dd1e1",
-  "#a4de6c",
-  "#d0ed57",
-  "#ffc0cb",
-];
 
 const Dashboard = () => {
   const [message, setMessage] = useState("");
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedData, setSelectedData] = useState("amount");
-
-  //variable to store and set transaction data formated for chart display
   const [transactionData, setTransactionData] = useState([]);
 
   useEffect(() => {
@@ -58,9 +51,8 @@ const Dashboard = () => {
 
   const transformTransactionData = (transactions, month, year) => {
     const dailyData = {};
-    //get number of days
     const daysInMonths = new Date(year, month, 0).getDate();
-    //initialize each day in the month with default values
+
     for (let day = 1; day <= daysInMonths; day++) {
       dailyData[day] = {
         day,
@@ -69,13 +61,12 @@ const Dashboard = () => {
         amount: 0,
       };
     }
-    //process each trnsaction to accumulate daily counts,quantity and amount
+
     transactions.forEach((transaction) => {
       const transactionDate = new Date(transaction.createdAt);
       const transactionMonth = transactionDate.getMonth() + 1;
       const transactionYear = transactionDate.getFullYear();
 
-      //If transaction falls withing selected month and year,accumulate data for the day
       if (transactionMonth === month && transactionYear === year) {
         const day = transactionDate.getDate();
         dailyData[day].count += 1;
@@ -83,19 +74,16 @@ const Dashboard = () => {
         dailyData[day].amount += transaction.totalPrice;
       }
     });
-    //return daily object for chart compatibility
 
     return Object.values(dailyData);
   };
 
-  //event handler for month selection
   const handleMonthChange = (e) => {
-    setSelectedMonth(parseInt(e.target.value, 10));
+    setSelectedMonth(Number.parseInt(e.target.value, 10));
   };
 
-  //event handler for year selection
   const handleYearChange = (e) => {
-    setSelectedYear(parseInt(e.target.value, 10));
+    setSelectedYear(Number.parseInt(e.target.value, 10));
   };
 
   const showMessage = (msg) => {
@@ -105,19 +93,46 @@ const Dashboard = () => {
     }, 3000);
   };
 
+  // Calculate summary statistics
+  const getSummaryStats = () => {
+    const total = transactionData.reduce(
+      (sum, day) => sum + day[selectedData],
+      0
+    );
+    const average = total / transactionData.length;
+    const max = Math.max(...transactionData.map((day) => day[selectedData]));
+    const min = Math.min(...transactionData.map((day) => day[selectedData]));
+
+    return { total, average: average.toFixed(2), max, min };
+  };
+
+  const stats = getSummaryStats();
+
   return (
     <Layout>
       {message && <div className="message">{message}</div>}
       <div className="dashboard-page">
         <div className="button-groups">
-          <button onClick={() => setSelectedData("count")}>
+          <button
+            onClick={() => setSelectedData("count")}
+            className={selectedData === "count" ? "active" : ""}
+          >
             Number Of Transaction
           </button>
-          <button onClick={() => setSelectedData("quantity")}>
+          <button
+            onClick={() => setSelectedData("quantity")}
+            className={selectedData === "quantity" ? "active" : ""}
+          >
             Product Quantity
           </button>
-          <button onClick={() => setSelectedData("amount")}>Amount</button>
+          <button
+            onClick={() => setSelectedData("amount")}
+            className={selectedData === "amount" ? "active" : ""}
+          >
+            Amount
+          </button>
         </div>
+
         <div className="dashboard-contents">
           <div className="filter-section">
             <label htmlFor="month-select">Select Month : </label>
@@ -132,7 +147,6 @@ const Dashboard = () => {
                 </option>
               ))}
             </select>
-
             <label htmlFor="year-select">Select Year :</label>
             <select
               id="year-select"
@@ -149,92 +163,182 @@ const Dashboard = () => {
               })}
             </select>
           </div>
-          {/*display the chart*/}
-          <div className="chart-section">
-            <div className="chart-container">
-              <h3> Daily Transactions</h3>
-              <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={transactionData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="day"
-                    label={{
-                      value: "Day",
-                      position: "insideBottomRight",
-                      offset: -5,
-                    }}
-                  />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line
-                    type={"monotone"}
-                    dataKey={selectedData}
-                    stroke="008080"
-                    fillOpacity={0.3}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
 
-              {/* Bar Chart for Daily Data */}
-              <div className="chart-container">
-                <h3>
-                  Daily{" "}
-                  {selectedData.charAt(0).toUpperCase() + selectedData.slice(1)}{" "}
-                  - Bar Chart
-                </h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={transactionData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="day" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey={selectedData} fill="#8884d8" />
-                  </BarChart>
-                </ResponsiveContainer>
-
-                {/* Pie Chart for Total Monthly Data Distribution */}
-                <div className="chart-container">
-                  <h3>
-                    Total{" "}
-                    {selectedData.charAt(0).toUpperCase() +
-                      selectedData.slice(1)}{" "}
-                    - Pie Chart
-                  </h3>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={transactionData.map((d) => ({
-                          name: `Day ${d.day}`,
-                          value: d[selectedData],
-                        }))}
-                        dataKey="value"
-                        nameKey="name"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={120}
-                        fill="#8884d8"
-                        label
-                      >
-                        {transactionData.map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
-                          />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
+          {/* Summary Statistics Cards */}
+          <div className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-value">{stats.total}</div>
+              <div className="stat-label">
+                Total{" "}
+                {selectedData.charAt(0).toUpperCase() + selectedData.slice(1)}
               </div>
             </div>
+            <div className="stat-card">
+              <div className="stat-value">{stats.average}</div>
+              <div className="stat-label">Daily Average</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value">{stats.max}</div>
+              <div className="stat-label">Highest Day</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value">{stats.min}</div>
+              <div className="stat-label">Lowest Day</div>
+            </div>
+          </div>
+
+          {/* Charts Grid Layout */}
+          <div className="charts-grid">
+            {/* Bar Chart */}
+            <div className="chart-container">
+              <h3>
+                Daily{" "}
+                {selectedData.charAt(0).toUpperCase() + selectedData.slice(1)} -
+                Bar Chart
+              </h3>
+              <ResponsiveContainer width="100%" height={350}>
+                <BarChart data={transactionData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                  <XAxis dataKey="day" stroke="#b3b3b3" fontSize={12} />
+                  <YAxis stroke="#b3b3b3" fontSize={12} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1e1e1e",
+                      border: "1px solid #333",
+                      borderRadius: "8px",
+                      color: "#fff",
+                    }}
+                  />
+                  <Legend />
+                  <Bar
+                    dataKey={selectedData}
+                    fill="#00d4aa"
+                    radius={[4, 4, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Area Chart */}
+            <div className="chart-container">
+              <h3>
+                Daily{" "}
+                {selectedData.charAt(0).toUpperCase() + selectedData.slice(1)} -
+                Area Chart
+              </h3>
+              <ResponsiveContainer width="100%" height={350}>
+                <AreaChart data={transactionData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                  <XAxis dataKey="day" stroke="#b3b3b3" fontSize={12} />
+                  <YAxis stroke="#b3b3b3" fontSize={12} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1e1e1e",
+                      border: "1px solid #333",
+                      borderRadius: "8px",
+                      color: "#fff",
+                    }}
+                  />
+                  <Legend />
+                  <Area
+                    type="monotone"
+                    dataKey={selectedData}
+                    stroke="#0099cc"
+                    fill="#0099cc"
+                    fillOpacity={0.3}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Composed Chart (Line + Bar) */}
+            <div className="chart-container">
+              <h3>Combined View - Line & Bar</h3>
+              <ResponsiveContainer width="100%" height={350}>
+                <ComposedChart data={transactionData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                  <XAxis dataKey="day" stroke="#b3b3b3" fontSize={12} />
+                  <YAxis stroke="#b3b3b3" fontSize={12} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1e1e1e",
+                      border: "1px solid #333",
+                      borderRadius: "8px",
+                      color: "#fff",
+                    }}
+                  />
+                  <Legend />
+                  <Bar
+                    dataKey={selectedData}
+                    fill="#00d4aa"
+                    fillOpacity={0.6}
+                    radius={[2, 2, 0, 0]}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey={selectedData}
+                    stroke="#ff4757"
+                    strokeWidth={3}
+                    dot={{ fill: "#ff4757", strokeWidth: 2, r: 4 }}
+                  />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Full Width Line Chart */}
+          <div className="line-chart-container">
+            <h3>Daily Transactions - Trend Analysis</h3>
+            <ResponsiveContainer width="100%" height={450}>
+              <LineChart data={transactionData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                <XAxis
+                  dataKey="day"
+                  stroke="#b3b3b3"
+                  fontSize={12}
+                  label={{
+                    value: "Day of Month",
+                    position: "insideBottom",
+                    offset: -10,
+                    style: { textAnchor: "middle", fill: "#b3b3b3" },
+                  }}
+                />
+                <YAxis
+                  stroke="#b3b3b3"
+                  fontSize={12}
+                  label={{
+                    value:
+                      selectedData.charAt(0).toUpperCase() +
+                      selectedData.slice(1),
+                    angle: -90,
+                    position: "insideLeft",
+                    style: { textAnchor: "middle", fill: "#b3b3b3" },
+                  }}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1e1e1e",
+                    border: "1px solid #333",
+                    borderRadius: "8px",
+                    color: "#fff",
+                  }}
+                />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey={selectedData}
+                  stroke="#00d4aa"
+                  strokeWidth={3}
+                  dot={{ fill: "#00d4aa", strokeWidth: 2, r: 5 }}
+                  activeDot={{ r: 8, stroke: "#00d4aa", strokeWidth: 2 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
     </Layout>
   );
 };
+
 export default Dashboard;

@@ -14,11 +14,13 @@ import Sell from "./pages/Sell";
 import Transaction from "./pages/Transaction";
 import TransactionDetails from "./pages/TransactionDetails";
 import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
 
