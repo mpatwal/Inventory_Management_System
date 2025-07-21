@@ -37,9 +37,10 @@ public class TranscationController {
     public ResponseEntity<Response>getAllTransactions(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size,
-            @RequestParam(required = false) String searchValue)
+            @RequestParam(required = false) String filter)
     {
-        return ResponseEntity.ok(transactionService.getAllTransactions(page,size,searchValue));
+        System.out.println("search :" +filter);
+        return ResponseEntity.ok(transactionService.getAllTransactions(page,size,filter));
     }
 
     @GetMapping("/{id}")

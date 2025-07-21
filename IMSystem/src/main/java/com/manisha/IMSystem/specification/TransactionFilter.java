@@ -24,7 +24,7 @@ public class TransactionFilter {
             predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), searchPattern));
             predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("note")), searchPattern));
             predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("status").as(String.class)), searchPattern));
-            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("transactionsType").as(String.class)), searchPattern));
+            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("transactionType").as(String.class)), searchPattern));
 
             // User fields
             if (root.getJoins().stream().noneMatch(j -> j.getAttribute().getName().equals("user"))) {

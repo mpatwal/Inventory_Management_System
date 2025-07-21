@@ -99,7 +99,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         //create a transaction
         Transaction transaction = Transaction.builder()
-                .transactionType(TransactionType.SALE)
+                .transactionType(TransactionType.SELL)
                 .status(TransactionStatus.COMPLETED)
                 .product(product)
                 .user(user)
@@ -192,7 +192,7 @@ public class TransactionServiceImpl implements TransactionService {
                 .orElseThrow(()-> new NotFoundException("Transaction Not Found"));
 
         TransactionDTO transactionDTO = modelMapper.map(transaction,TransactionDTO.class);
-        transactionDTO.setUser(null);
+        transactionDTO.getUser().setTransactions(null);
         return Response.builder()
                 .status(200)
                 .message("Success")
