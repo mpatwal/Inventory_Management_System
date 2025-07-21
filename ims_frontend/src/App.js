@@ -13,6 +13,7 @@ import Purchase from "./pages/Purchase";
 import Sell from "./pages/Sell";
 import Transaction from "./pages/Transaction";
 import TransactionDetails from "./pages/TransactionDetails";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -26,10 +27,7 @@ function App() {
           path="/category"
           element={<AdminRoute element={<Category />} />}
         />
-        <Route
-          path="/profile"
-          element={<ProtectedRoute element={<Profile />} />}
-        />
+
         <Route
           path="/supplier"
           element={<AdminRoute element={<Supplier />} />}
@@ -53,6 +51,14 @@ function App() {
         />
 
         {/* ADMIN AND MANGER ROUTE*/}
+        <Route
+          path="/dashboard"
+          element={<ProtectedRoute element={<Dashboard />} />}
+        />
+        <Route
+          path="/profile"
+          element={<ProtectedRoute element={<Profile />} />}
+        />
         <Route
           path="/purchase"
           element={<ProtectedRoute element={<Purchase />} />}
