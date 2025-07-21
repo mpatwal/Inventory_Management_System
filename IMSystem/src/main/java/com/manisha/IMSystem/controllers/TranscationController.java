@@ -3,6 +3,7 @@ package com.manisha.IMSystem.controllers;
 import com.manisha.IMSystem.dto.CategoryDTO;
 import com.manisha.IMSystem.dto.Response;
 import com.manisha.IMSystem.dto.TransactionRequest;
+import com.manisha.IMSystem.dto.TransactionUpdate;
 import com.manisha.IMSystem.enums.TransactionStatus;
 import com.manisha.IMSystem.services.TransactionService;
 import jakarta.validation.Valid;
@@ -54,12 +55,14 @@ public class TranscationController {
     }
 
     @PutMapping("/update/{transactionId}")
-    public ResponseEntity<Response>updateTransactionStatus(
+    public ResponseEntity<Response> updateTransactionStatus(
             @PathVariable Long transactionId,
-            @RequestBody TransactionStatus status){
+            @RequestBody TransactionUpdate request) {
 
         System.out.println("I hit update transaction");
-        return ResponseEntity.ok(transactionService.updateTransactionStatus(transactionId,status));
+        return ResponseEntity.ok(transactionService.updateTransactionStatus(transactionId, request.getStatus()));
     }
 
+
 }
+

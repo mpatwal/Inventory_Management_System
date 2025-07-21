@@ -112,7 +112,7 @@ public class TransactionServiceImpl implements TransactionService {
         transactionRepository.save(transaction);
         return Response.builder()
                 .status(200)
-                .message("Product sale male successfully")
+                .message("Product sale made successfully")
                 .build();
 
 
